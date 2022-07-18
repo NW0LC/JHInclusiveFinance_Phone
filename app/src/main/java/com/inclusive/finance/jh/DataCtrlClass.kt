@@ -4035,7 +4035,41 @@ object DataCtrlClass {
                     })
             }
         }
+        /**
+         * /**
+         * 征信-生成二维码
+        */
+        val creditAnalysisAdd = url + "zx/zx/add"
+         */
+        fun creditErweiMa(
+            context: Context?,
+            url: String,
+            creditId: String? = "",
+            listener: (it: String?) -> Unit
+        ) { //       orderId=$orderId&prePay =$prePay
+            val params = HashMap<String, String>()
+            params["id"] = creditId ?: ""
 
+            context?.let {
+                OkGo.post<NetEntity<String>>(url).params(params).tag(this)
+                    .execute(object : DialogCallback<NetEntity<String>>(it, true) {
+                        override fun onSuccess(response: Response<NetEntity<String>>) {
+                            if (response.body().code == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body()?.result)
+                                SZWUtils.showSnakeBarSuccess(response.body()?.msg.toString())
+                            } else {
+                                SZWUtils.showSnakeBarError(response.body()?.msg.toString())
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<String>>) {
+                            super.onError(response)
+                            listener.invoke(null)
+                        }
+
+                    })
+            }
+        }
         /**
          * 暂存信息
          */

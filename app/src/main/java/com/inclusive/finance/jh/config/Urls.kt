@@ -60,7 +60,14 @@ object Urls {
      *强制密码登录
      */
     val loginPwd1 = url + "sys/login1"
-
+    /**
+     * 征信-添加二维码
+     */
+    val createAuthQR = url + "zx/zxrw/createAuthQR"
+    /**
+     * 征信-授权书二维码
+     */
+    val createSqsQR = url + "zx/zxrw/createSqsQR"
     /**
      *登出
      */

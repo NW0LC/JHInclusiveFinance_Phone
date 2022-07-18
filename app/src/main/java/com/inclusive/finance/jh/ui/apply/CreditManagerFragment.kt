@@ -1,6 +1,7 @@
 package com.inclusive.finance.jh.ui.apply
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,10 +32,14 @@ import com.inclusive.finance.jh.config.Constants
 import com.inclusive.finance.jh.config.Urls
 import com.inclusive.finance.jh.databinding.FragmentApplyCreditManagerBinding
 import com.inclusive.finance.jh.databinding.ItemBaseListCardBinding
+import com.inclusive.finance.jh.glide.GlideEngine
 import com.inclusive.finance.jh.interfaces.PresenterClick
 import com.inclusive.finance.jh.pop.*
 import com.inclusive.finance.jh.utils.SZWUtils
 import com.inclusive.finance.jh.widget.MyWebActivity
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.style.PictureParameterStyle
 import com.mabeijianxi.smallvideorecord2.Log
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -205,6 +210,8 @@ class CreditManagerFragment : MyBaseFragment(), PresenterClick, OnLoadMoreListen
         add("征信授权")
         add("查看征信PDF")
         add("查看征信解析")
+        add("征信二维码")
+        add("授权书二维码")
         add("提交")
         add("删除")
     }
@@ -228,6 +235,38 @@ class CreditManagerFragment : MyBaseFragment(), PresenterClick, OnLoadMoreListen
             R.id.bt_more -> {
                 BaseListMenuPop(requireActivity(), listMenuDatas) {
                     when (listMenuDatas[it]) {
+                        "征信二维码" ->{
+                            DataCtrlClass.ApplyNet.creditErweiMa(context, Urls.createAuthQR, SZWUtils.getJsonObjectString(jsonObject, "id")) {
+                                val medias: MutableList<LocalMedia> = ArrayList()
+                                val localMedia = LocalMedia()
+                                localMedia.path = SZWUtils.getIntactUrl(it)
+                                medias.add(localMedia)
+                                val pictureParameterStyle = PictureParameterStyle() //                            pictureParameterStyle.pictureExternalPreviewGonePreviewDelete = !viewModel.getSeeOnly()
+                                if (medias.size > 0) PictureSelector.create(this)
+                                    .themeStyle(R.style.picture_default_style)
+                                    .setPictureStyle(pictureParameterStyle)
+                                    .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT)
+                                    .isNotPreviewDownload(true)
+                                    .imageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
+                                    .openExternalPreview( 0,medias)
+                            }
+                        }
+                        "授权书二维码" ->{
+                            DataCtrlClass.ApplyNet.creditErweiMa(context, Urls.createSqsQR, SZWUtils.getJsonObjectString(jsonObject, "id")) {
+                                val medias: MutableList<LocalMedia> = ArrayList()
+                                val localMedia = LocalMedia()
+                                localMedia.path = SZWUtils.getIntactUrl(it)
+                                medias.add(localMedia)
+                                val pictureParameterStyle = PictureParameterStyle() //                            pictureParameterStyle.pictureExternalPreviewGonePreviewDelete = !viewModel.getSeeOnly()
+                                if (medias.size > 0) PictureSelector.create(this)
+                                    .themeStyle(R.style.picture_default_style)
+                                    .setPictureStyle(pictureParameterStyle)
+                                    .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT)
+                                    .isNotPreviewDownload(true)
+                                    .imageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
+                                    .openExternalPreview( 0,medias)
+                            }
+                        }
                         "征信授权" -> {
                             when {
                                 viewModel.businessType < 50 || viewModel.businessType == ApplyModel.BUSINESS_TYPE_CREDIT_MANAGER_ZXGL || viewModel.businessType == ApplyModel.BUSINESS_TYPE_SUNSHINE_APPLY -> {
