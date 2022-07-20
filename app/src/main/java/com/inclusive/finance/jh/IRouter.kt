@@ -143,6 +143,9 @@ object IRouter {
             "action_to_contractFragment" -> {
                 R.id.action_to_contractFragment
             }
+            "action_to_DianZiHeTongDengJiListFragment" -> {
+                R.id.action_to_DianZiHeTongDengJiListFragment
+            }
             else -> {
                 null
             }

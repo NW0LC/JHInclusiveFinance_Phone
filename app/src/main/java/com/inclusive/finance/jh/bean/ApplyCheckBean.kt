@@ -44,6 +44,30 @@ class ApplyCheckBean : BaseObservable() {
             notifyPropertyChanged(BR.bdqzCheck)
         }
     @Bindable
+    var glsxCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.glsxCheck)
+        }
+    @Bindable
+    var htxxCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.htxxCheck)
+        }
+    @Bindable
+    var llcsCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.llcsCheck)
+        }
+    @Bindable
+    var rlsbCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.rlsbCheck)
+        }
+    @Bindable
     var pyqzCheck: Boolean? = false
         set(value) {
             field = value
@@ -367,6 +391,10 @@ class ApplyCheckBean : BaseObservable() {
         pyqzCheck = false//评议签字
         edbdCheck = false//额度对比
         bdqzCheck = false//比对签字
+        glsxCheck = false//关联授信
+        htxxCheck = false//合同信息
+        llcsCheck = false//利率测算
+        rlsbCheck = false//人脸识别
     }
 }
 
@@ -406,6 +434,30 @@ class ComleteCheckBean : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.bdqzCheck)
+        }
+    @Bindable
+    var glsxCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.glsxCheck)
+        }
+    @Bindable
+    var htxxCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.htxxCheck)
+        }
+    @Bindable
+    var llcsCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.llcsCheck)
+        }
+    @Bindable
+    var rlsbCheck: Boolean? = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.rlsbCheck)
         }
     @Bindable
     var pyqzCheck: Boolean? = false

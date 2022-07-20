@@ -51,6 +51,7 @@
     <item name="navigation_EDuBiDuiListFragment" type="id" />
     <item name="navigation_RiChangJianListFragment2" type="id" />
     <item name="navigation_shouJianListFragment2" type="id" />
+    <item name="navigation_DianZiHeTongDengJiListFragment" type="id" />
 
 
 </resources>

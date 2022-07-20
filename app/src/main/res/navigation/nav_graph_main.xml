@@ -286,6 +286,13 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
+            android:id="@+id/action_to_DianZiHeTongDengJiListFragment"
+            app:destination="@+id/navigation_DianZiHeTongDengJiListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_to_applyActivity"
             app:destination="@+id/navigation_applyActivity" />
         <action
@@ -607,7 +614,6 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_contractFragment"
-        android:label="navigation_applyList"
         android:name="com.inclusive.finance.jh.ui.ContractListFragment"
         tools:layout="@layout/fragment_apply_list">
         <action
@@ -900,6 +906,17 @@
     <fragment
         android:id="@+id/navigation_FuPinListFragment"
         android:name="com.inclusive.finance.jh.ui.FuPinListFragment"
+        tools:layout="@layout/fragment_apply_list">
+        <action
+            android:id="@+id/action_to_applyActivity"
+            app:destination="@+id/navigation_applyActivity" />
+        <action
+            android:id="@+id/action_to_navActivity"
+            app:destination="@+id/navigation_navActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_DianZiHeTongDengJiListFragment"
+        android:name="com.inclusive.finance.jh.ui.DianZiHeTongDengJiListFragment"
         tools:layout="@layout/fragment_apply_list">
         <action
             android:id="@+id/action_to_applyActivity"

@@ -81,12 +81,6 @@ class ItemBaseListCardAdapter<T : JsonObject>(var fragment: MyBaseFragment,var l
         binding?.data = item
         binding?.checkBean = checkListBean[holder.bindingAdapterPosition]
         binding?.contentLay?.removeAllViews()
-        if(SZWUtils.getJsonObjectString(item, "state")=="审批通过"){
-            binding?.btChange?.visibility=View.GONE
-        }else{
-            binding?.btChange?.visibility=View.VISIBLE
-
-        }
         listBean.titleList.forEachIndexed { index, listTitle ->
 //            showRowCount : -1 无此字段或 不设数值  ，-2 全部显示
             var showRowCount = SZWUtils.getJsonObjectInt(item, "showRowCount")

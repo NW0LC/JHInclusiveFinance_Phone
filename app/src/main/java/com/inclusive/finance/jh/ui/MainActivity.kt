@@ -62,6 +62,7 @@ class MainActivity : BaseActivity(), NavigationHost {
         R.id.navigation_WenJuanDiaoChaListFragment,
         R.id.navigation_ShouXinPingYiListFragment,
         R.id.navigation_EDuBiDuiListFragment,
+        R.id.navigation_DianZiHeTongDengJiListFragment,
     )
 
     override fun initToolbar() {

@@ -253,6 +253,12 @@
         android:name="com.inclusive.finance.jh.ui.yx.PingYiQianZiFragment"
         tools:layout="@layout/fragment_report" />
 
+<!--    android:label="新联授信"-->
+    <fragment
+        android:id="@+id/GLSXFragment"
+        android:name="com.inclusive.finance.jh.ui.dz.GLSXFragment"
+        tools:layout="@layout/fragment_report" />
+
 
     <!--    android:label="单页"-->
     <activity

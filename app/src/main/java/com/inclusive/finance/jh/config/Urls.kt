@@ -7,10 +7,10 @@ package com.inclusive.finance.jh.config
 object Urls {
     var APP_ID = ""
 
-    var url = "http://218.2.46.141:8081/jeecg-boot/"//外网
-//    var url = "http://192.168.3.89:8082/jeecg-boot/"
+//    var url = "http://218.2.46.141:8081/jeecg-boot/"//外网
+//    var url = "http://192.168.3.89:8081/jeecg-boot/"
 
-//    var url = "http://192.168.3.111:8012/jeecg-boot/"
+    var url = "http://192.168.3.111:8001/jeecg-boot/"
 //    var url = "http://18c47a7a2b69d689.natapp.cc:1290/jeecg-boot/"
 //    var url = "http://phjr.gnnsyh.com:9022/jeecg-boot/"
 
@@ -1533,5 +1533,11 @@ object Urls {
     val htqy_previewApp = url + "yxxt/htqy/previewApp"
     val getJtxx = url + "ygxt/whyw/jtxx"
 
-
+    /**
+     * 合同登记
+     */
+    val getList_HTDJ = url + "sunshine/zrrdb/list"
+    val getEdit_HTDJ = url + "sunshine/zrrdb/getPage"
+    val save_HTDJ = url + "sunshine/zrrdb/addoredit"
+    val delete_HTDJ = url + "sunshine/zrrdb/delete"
 }

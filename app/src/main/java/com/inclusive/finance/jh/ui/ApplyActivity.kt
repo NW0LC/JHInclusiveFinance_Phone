@@ -66,7 +66,7 @@ class ApplyActivity : BaseActivity() {
 
     @Autowired
     @JvmField
-    var jsonObject : String? = ""
+    var jsonObject: String? = ""
 
     @Autowired
     @JvmField
@@ -92,17 +92,23 @@ class ApplyActivity : BaseActivity() {
     }
 
     override fun setInflateBinding() {
-        viewBind = DataBindingUtil.setContentView<ActivityApplyBinding>(this, R.layout.activity_apply)
-            .apply {
-                viewModel = ViewModelProvider(this@ApplyActivity).get(ApplyModel::class.java)
-                data = viewModel
-                lifecycleOwner = this@ApplyActivity
-            }
+        viewBind =
+            DataBindingUtil.setContentView<ActivityApplyBinding>(this, R.layout.activity_apply)
+                .apply {
+                    viewModel = ViewModelProvider(this@ApplyActivity).get(ApplyModel::class.java)
+                    data = viewModel
+                    lifecycleOwner = this@ApplyActivity
+                }
     }
 
     companion object {
         enum class ClassType {
-            XXGK, GSXX, JTCY, SXSQD, WHYW, FXTC, ZXGL, CSJG, NSWD, SDDC, LLSR, XJL, SXYKH, ZCFZ, SYJB, CWJB, DBQK, PJZB, YXZL, DCBG, DCBG_SIMPLE, DCJL, SXPY,SJBG,RCBG,YXJC,ZFXX
+            XXGK, GSXX, JTCY, SXSQD, WHYW, FXTC, ZXGL, CSJG, NSWD, SDDC, LLSR, XJL, SXYKH, ZCFZ, SYJB, CWJB, DBQK, PJZB, YXZL, DCBG, DCBG_SIMPLE, DCJL, SXPY, SJBG, RCBG, YXJC, ZFXX
+        }
+
+        /**贷中*/
+        enum class ClassType_DZ {
+            GLSX, HTXX, DBXX, LLCS, RLSB, YXZL
         }
 
         fun getMenuList(businessType: Int): ArrayList<Enum12> {
@@ -161,7 +167,7 @@ class ApplyActivity : BaseActivity() {
                     list.add(Enum12(DBQK, "担保情况"))
                     list.add(Enum12(PJZB, "评级指标"))
                     list.add(Enum12(YXZL, "影像资料"))
-                     list.add(Enum12(DCJL, "调查结论"))
+                    list.add(Enum12(DCJL, "调查结论"))
                     list.add(Enum12(DCBG_SIMPLE, "调查报告"))
 
                 }
@@ -171,13 +177,13 @@ class ApplyActivity : BaseActivity() {
                 ApplyModel.BUSINESS_TYPE_SJ2 -> {
                     list.add(Enum12(SJBG, "首检报告"))
                 }
-                ApplyModel.BUSINESS_TYPE_RC-> {
+                ApplyModel.BUSINESS_TYPE_RC -> {
                     list.add(Enum12(RCBG, "日常报告"))
                 }
-                ApplyModel.BUSINESS_TYPE_RC2-> {
+                ApplyModel.BUSINESS_TYPE_RC2 -> {
                     list.add(Enum12(RCBG, "日常报告"))
                 }
-                ApplyModel.BUSINESS_TYPE_JNJ_YX-> {
+                ApplyModel.BUSINESS_TYPE_JNJ_YX -> {
 //                    list.add(Enum12(ZXGL, "征信管理"))
                     list.add(Enum12(YXJC, "用信检查"))
                 }
@@ -185,6 +191,15 @@ class ApplyActivity : BaseActivity() {
                     list.add(Enum12(XXGK, "户信息"))
                     list.add(Enum12(JTCY, "家庭信息"))
                     list.add(Enum12(ZFXX, "走访信息"))
+
+                }
+                ApplyModel.BUSINESS_TYPE_DIANZIHETONGDENGJI -> {
+                    list.add(Enum12(ClassType_DZ.GLSX, "关联授信"))
+                    list.add(Enum12(ClassType_DZ.HTXX, "合同信息"))
+                    list.add(Enum12(ClassType_DZ.DBXX, "担保信息"))
+                    list.add(Enum12(ClassType_DZ.LLCS, "利率测算"))
+                    list.add(Enum12(ClassType_DZ.RLSB, "人脸识别"))
+                    list.add(Enum12(ClassType_DZ.YXZL, "影像资料"))
 
                 }
             }
@@ -206,7 +221,13 @@ class ApplyActivity : BaseActivity() {
         //            ActivityUtils.finishActivity(this)
         //        }
         if (Build.VERSION.SDK_INT >= 23) {
-            requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 101)
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), 101
+            )
         }
 //        Watermark.instance?.show(this, "Fantasy BlogDemo")
         viewBind.actionBarCustom.toolbar.setNavigationOnClickListener {
@@ -236,6 +257,9 @@ class ApplyActivity : BaseActivity() {
             }
             ApplyModel.BUSINESS_TYPE_JNJ_YX -> {
                 viewBind.actionBarCustom.toolbar.title = "季年检"
+            }
+            ApplyModel.BUSINESS_TYPE_DIANZIHETONGDENGJI -> {
+                viewBind.actionBarCustom.toolbar.title = "电子合同登记"
             }
         }
         tabsStr.forEach {
@@ -453,8 +477,10 @@ class ApplyActivity : BaseActivity() {
 ////
 ////            }
 //        }
-        val navHostFragment: NavHostFragment = supportFragmentManager.findFragmentById(R.id.apply_nav_host_fragment) as NavHostFragment
-        val navGraph: NavGraph = navHostFragment.navController.navInflater.inflate(R.navigation.nav_graph_apply)
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.apply_nav_host_fragment) as NavHostFragment
+        val navGraph: NavGraph =
+            navHostFragment.navController.navInflater.inflate(R.navigation.nav_graph_apply)
         navGraph.setStartDestination(getActionByType(viewModel.businessType))
         navHostFragment.navController.graph = navGraph
 //        viewModel.applyCheckBean?.xxgkCheck = true
@@ -503,7 +529,12 @@ class ApplyActivity : BaseActivity() {
         //        val mainData = SZWUtils.getJson(this, "checkData.json")
         //        val data = Gson().fromJson(mainData, ComleteCheckBean::class.java)
         //        viewModel.applyCheckBean?.completeCheckBean = data
-        if ((viewModel.creditId + viewModel.dhId + viewModel.zfId).isNotEmpty()) DataCtrlClass.ApplyNet.getApplyCheck(this, viewModel.creditId, viewModel.dhId, viewModel.zfId) {
+        if ((viewModel.creditId + viewModel.dhId + viewModel.zfId).isNotEmpty()) DataCtrlClass.ApplyNet.getApplyCheck(
+            this,
+            viewModel.creditId,
+            viewModel.dhId,
+            viewModel.zfId
+        ) {
             if (it != null) {
                 viewModel.applyCheckBean?.completeCheckBean = it
             }
@@ -555,7 +586,7 @@ class ApplyActivity : BaseActivity() {
         //            }
         //        }
         val fragmentId = when (id) {
-            XXGK/* "信息概况" */ ,SJBG/* "首检报告" */ ,RCBG/* "日常报告" */ ,YXJC/* "用信检查" */ -> {
+            XXGK/* "信息概况" */, SJBG/* "首检报告" */, RCBG/* "日常报告" */, YXJC/* "用信检查" */ -> {
                 viewModel.applyCheckBean?.xxgkCheck = true
                 R.id.customerInfoFragment
             }
@@ -747,6 +778,30 @@ class ApplyActivity : BaseActivity() {
 //            }
             DCBG_SIMPLE/*"调查报告-简易类"*/ -> {
                 viewModel.applyCheckBean?.dcbgCheck = true
+                R.id.ReportLineFragment
+            }
+            ClassType_DZ.GLSX/*"电子合同-关联授信"*/ -> {
+                viewModel.applyCheckBean?.glsxCheck = true
+                R.id.GLSXFragment
+            }
+            ClassType_DZ.HTXX/*"电子合同-合同信息"*/ -> {
+                viewModel.applyCheckBean?.htxxCheck = true
+                R.id.ReportLineFragment
+            }
+            ClassType_DZ.DBXX/*"电子合同-担保"*/ -> {
+                viewModel.applyCheckBean?.dbdyCheck = true
+                R.id.ReportLineFragment
+            }
+            ClassType_DZ.LLCS/*"电子合同-利率测算"*/ -> {
+                viewModel.applyCheckBean?.llcsCheck = true
+                R.id.ReportLineFragment
+            }
+            ClassType_DZ.RLSB/*"电子合同-人脸识别"*/ -> {
+                viewModel.applyCheckBean?.rlsbCheck = true
+                R.id.ReportLineFragment
+            }
+            ClassType_DZ.YXZL/*"电子合同-影像资料"*/ -> {
+                viewModel.applyCheckBean?.yxzlCheck = true
                 R.id.ReportLineFragment
             }
             else -> {

@@ -669,9 +669,11 @@ object DataCtrlClass {
             context: Context?,
             url: String? = "",
             flag: String? = "",
+            json: List<BaseTypeBean>? = arrayListOf(),
             jsonObject: JsonObject? = null,
             keyId: String? = "",
             businessType: String? = "",
+            contentView: View? = null,
             listener: (it: ArrayList<BaseTypeBean>?) -> Unit
         ) { //       orderId=$orderId&prePay =$prePay
             val params = HashMap<String, String>()
@@ -684,7 +686,7 @@ object DataCtrlClass {
             params["ysxId"] = keyId ?: ""
             params["yxId"] = keyId ?: ""
             params["businessType"] = businessType ?: ""
-
+            params["json"] = Gson().toJson(json)
             context?.let {
                 OkGo.post<NetEntity<ArrayList<BaseTypeBean>>>(SZWUtils.getIntactUrl(url))
                     .params(params).tag(this)
@@ -694,7 +696,7 @@ object DataCtrlClass {
                                 listener.invoke(response.body().result)
                             } else {
                                 listener.invoke(null)
-                                SZWUtils.showSnakeBarError(response.body()?.msg.toString())
+                                SZWUtils.showSnakeBarError(contentView,response.body()?.msg.toString())
                             }
                         }
 
@@ -4899,6 +4901,100 @@ object DataCtrlClass {
      *营销部分
      *
      * */
+    object HTNet {
+        /**
+         * 合同登记列表
+         */
+        fun getHTDJList(
+        context: Context?,
+        url: String,
+        pageNum: Int,
+        idenNo: String,
+        processStatus: String,
+        listener: (it: BaseListBean?) -> Unit
+    ) { //       orderId=$orderId&prePay =$prePay
+        val params = HashMap<String, String>()
+        params["pageNo"] = pageNum.toString() + ""
+        params["pageSize"] = "15"
+        params["idenNo"] = idenNo
+        params["processStatus"] = processStatus
+        context?.let {
+            OkGo.post<NetEntity<ArrayList<BaseTypeBean>>>(url).params(params).tag(this)
+                .execute(object :
+                    DialogCallback<NetEntity<ArrayList<BaseTypeBean>>>(it, false) {
+                    override fun onSuccess(response: Response<NetEntity<ArrayList<BaseTypeBean>>>) {
+                        if (response.body().code == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().result?.get(0)?.listBean)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<ArrayList<BaseTypeBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+        }
+    }
+        /**
+         * 电子合同登记查客户信息确认
+         */
+        fun jzhtdjCheck(
+            context: Context?,
+            url: String? = "",
+            flag: String? = "",
+            json: List<BaseTypeBean>? = arrayListOf(),
+            jsonObject: JsonObject? = null,
+            keyId: String? = "",
+            businessType: String? = "",
+            contentView: View? = null,
+            listener: (it: String?) -> Unit
+        ) { //       orderId=$orderId&prePay =$prePay
+            val params = HashMap<String, String>()
+            if (jsonObject != null) params["bean"] = Gson().toJson(jsonObject)
+            params["id"] = SZWUtils.getJsonObjectString(jsonObject, "id")
+            params["flag"] = flag ?: ""
+            params["creditId"] = keyId ?: ""
+            params["dhId"] = keyId ?: ""
+            params["zfId"] = keyId ?: ""
+            params["ysxId"] = keyId ?: ""
+            params["yxId"] = keyId ?: ""
+            params["businessType"] = businessType ?: ""
+            params["json"] = Gson().toJson(json)
+            context?.let {
+                OkGo.post<NetEntity<String>>(url).params(params).tag(this)
+                    .execute(object : DialogCallback<NetEntity<String>>(it, true) {
+                        override fun onSuccess(response: Response<NetEntity<String>>) {
+                            if (response.body().code == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().result)
+                                SZWUtils.showSnakeBarSuccess(
+                                    contentView,
+                                    response.body()?.msg.toString()
+                                )
+                            } else {
+                                listener.invoke(null)
+                                SZWUtils.showSnakeBarError(
+                                    contentView,
+                                    response.body()?.msg.toString()
+                                )
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<String>>) {
+                            super.onError(response)
+                            listener.invoke(null)
+                        }
+
+                    })
+            }
+        }
+    }
+    /**
+     *营销部分
+     *
+     * */
     object YXNet {
 
         /**
@@ -5622,6 +5718,7 @@ object DataCtrlClass {
         }
 
     }
+
 
     /**
      * 系统管理

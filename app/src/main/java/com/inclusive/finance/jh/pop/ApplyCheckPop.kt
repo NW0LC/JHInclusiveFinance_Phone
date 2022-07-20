@@ -53,6 +53,21 @@ class ApplyCheckPop(var mContext: Context?, fragment: MyBaseFragment, var busine
                         }
 
                     }
+                    ApplyModel.BUSINESS_TYPE_DIANZIHETONGDENGJI -> {
+                        if (!isChecked) DataCtrlClass.KHGLNet.getBaseTypePoPList(mContext, checkUrl, json=bean , contentView = dataBind.root) {
+                            if (it != null) {
+                                adapter.setNewInstance(it)
+                                isChecked = true
+                            }
+                        } else {
+                            DataCtrlClass.HTNet.jzhtdjCheck(mContext, saveUrl, json = bean, contentView = dataBind.root) {
+                                if (it != null) {
+                                    listener.invoke(it)
+                                    dismiss()
+                                }
+                            }
+                        }
+                    }
                     else -> {
                         if (!isChecked) DataCtrlClass.SXSQNet.sxsqCheck(mContext, checkUrl, bean?.firstOrNull { it.dataKey == "idCardFront" }?.picUrl
                             ?: "", bean?.firstOrNull { it.dataKey == "idCardBack" }?.picUrl
@@ -113,7 +128,7 @@ class ApplyCheckPop(var mContext: Context?, fragment: MyBaseFragment, var busine
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dataBind.tvTitle.text = "添加申请"
+        dataBind.tvTitle.text = "客户信息确认"
         adapter.dialogPop = dialog
 //        dataBind.mRecyclerView.layoutManager = GridLayoutManager(mContext, 6)
         dataBind.mRecyclerView.layoutManager = LinearLayoutManager(act)

@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="data"
+            type="com.inclusive.finance.jh.bean.BaseTypeBean" />
+        <import type="com.blankj.utilcode.util.StringUtils"/>
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -22,6 +25,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+        <TextView
+            tools:text="title"
+            android:padding="@{StringUtils.isEmpty(data.listBean.title)? 0:8}"
+            android:textColor="@color/color_text_title"
+            android:textStyle="italic"
+            android:text="@{data.listBean.title}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"

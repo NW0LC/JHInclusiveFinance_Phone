@@ -141,7 +141,7 @@ class BaseTypePop(var mContext: Context?, var fragment: MyBaseFragment, val titl
                     }
                 }
             }else {
-                DataCtrlClass.KHGLNet.getBaseTypePoPList(mContext, getUrl, flag, json, keyId = keyId, businessType = businessType) {
+                DataCtrlClass.KHGLNet.getBaseTypePoPList(mContext, getUrl, flag, jsonObject = json, keyId = keyId, businessType = businessType) {
                     if (it != null) {
                         if (saveUrl.isNullOrEmpty()) {
                             it.forEach { baseTypeBean ->

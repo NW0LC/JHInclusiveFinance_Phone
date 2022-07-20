@@ -88,8 +88,8 @@ class ItemBaseTypeAdapter<T : BaseTypeBean>(var fragment: MyBaseFragment) :
     var onRichLayoutChangeListener: OnRichLayoutChange? = null
     var dialogPop: Dialog? = null //下拉窗是在dialog中使用
     var parentFrom: Int = 0 //表示在何处使用的adapter，0列表中，1pop中 暂时只为嵌套列表按钮使用
-    var subscribe: ((adapter: ItemBaseTypeAdapter<BaseTypeBean>, data: ArrayList<BaseTypeBean>, rootView: View) -> Unit?)? =
-        null
+    var subscribe: ((adapter: ItemBaseTypeAdapter<BaseTypeBean>, data: ArrayList<BaseTypeBean>, rootView: View) -> Unit?)? = null
+    var subscribeChildLayoutDrawListener: ((ItemBaseListCardAdapter<JsonObject>,T) -> ((BaseViewHolder, JsonObject) -> Unit?))? =null
     var keyId: String? = "" //列表内按钮和弹出窗时使用
     var type: String? = "" //图片上传时需要赋值使用
     var textListItemConfig: (parentItem: T?, parentPosition: Int, sonItem: JsonObject?, sonPosition: Int) -> ItemBaseListCardAdapter.TextListItemConfig =
@@ -524,6 +524,7 @@ class ItemBaseTypeAdapter<T : BaseTypeBean>(var fragment: MyBaseFragment) :
                 DataBindingUtil.getBinding<ItemBaseListCardListBinding>(holder.itemView)?.apply {
 //                    mRecyclerView.layoutParams.height = SizeUtils.dp2px(32f) * (item.listBean?.list?.size
 //                        ?: 0)
+                    data = item
                     if (!item.editable) {
                         if (item.listBean?.actionTypes?.contains("4") == true) {
                             if (item.listBean?.actionTypes?.length ?: 0 > 1) {
@@ -538,6 +539,7 @@ class ItemBaseTypeAdapter<T : BaseTypeBean>(var fragment: MyBaseFragment) :
                     adapter.subscribe = subscribe
                     mRecyclerView.adapter = adapter
                     adapter.setListData(data = item, list = item.listBean?.list)
+                    adapter.subscribeChildLayoutDrawListener=subscribeChildLayoutDrawListener?.invoke(adapter,item)
                     adapter.textListItemConfigFun = { sonItem, sonPosition ->
                         textListItemConfig.invoke(
                             item,

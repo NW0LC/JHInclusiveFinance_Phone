@@ -85,8 +85,8 @@ android {
     signingConfigs {
         debug {
 //          storeFile file('F:/AAAAAAAA/InclusiveFinance/AppStoreKey.jks')C:\Users\98559\Downloads\JnInclusiveFinance_Phone-main
-            storeFile file('C:/Users/98559/Downloads/JnInclusiveFinance_Phone-main/AppStoreKey.jks')
-//          storeFile file('D:\\Android\\StudioProjects\\GnInclusiveFinance_Phone\\AppStoreKey.jks')
+//            storeFile file('C:/Users/98559/Downloads/JnInclusiveFinance_Phone-main/AppStoreKey.jks')
+          storeFile file('D:\\Program Files\\Android\\StudioProjects\\JHInclusiveFinance_Phone\\AppStoreKey.jks')
             storePassword 'appstorekey'
             keyAlias 'storeKey'
             keyPassword 'appstorekey'

@@ -65,6 +65,7 @@ open class ApplyModel @Inject constructor(): ViewModel() {
         const val BUSINESS_TYPE_SJ2 = 400 //首检 2021年
         const val BUSINESS_TYPE_HTQY = 500 //合同签约
         const val BUSINESS_TYPE_FUPIN = 600 //扶贫走访
+        const val BUSINESS_TYPE_DIANZIHETONGDENGJI = 700 //贷中合同登记
 
     }
 }
